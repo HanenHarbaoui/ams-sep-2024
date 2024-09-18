@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("/etudiant")
 public class EtudiantController {
 	
  @RequestMapping("list")
@@ -17,13 +18,13 @@ public class EtudiantController {
 	 	String trainer = "Amine";
 	 	model.addAttribute("totalStudent", total);
 	 	model.addAttribute("trainerStudent", trainer);
-		return "listEtudiant";
+		return "Etudiant/listEtudiant";
 	}
  @RequestMapping("add")
  //@ResponseBody
 	public String addEtudiants()
 	{
-		return "addEtudiant";
+		return "Etudiant/addEtudiant";
 	}
  @RequestMapping("SaveEtudiant")
  @ResponseBody

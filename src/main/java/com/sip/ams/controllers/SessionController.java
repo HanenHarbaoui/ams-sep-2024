@@ -5,17 +5,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("sessions")
 public class SessionController {
 	
- @RequestMapping("listSession")
-
-	public String ListSession(Model model)
+ @RequestMapping("list")
+ public String ListSession()
 	{
 	 	
-	 	String names[] = {"OCA","OCP","FULLSTACK"};
-	 	model.addAttribute("names", names);
+	 	//String names[] = {"OCA","OCP","FULLSTACK"};
+	 	//model.addAttribute("names", names);
 	 	
-		return "listSession";
+		return "session/listSession";
 	}
  @RequestMapping("addSession")
 
