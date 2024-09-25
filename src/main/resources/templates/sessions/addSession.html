@@ -1,0 +1,17 @@
+<div th:replace="fragments/header::header"></div>
+<h1 align="center">Ajouter nouvelle session</h1>
+
+<form th:action="@{/sessions/saveSession}" th:method="Post" th:object="${temp}">
+	
+<div class="mb-3">
+	<label for="titreSession" class="form-label">Titre session</label>
+	<input type="text" th:field="*{titre}" class="form-control" id="titreSession" placeholder="Titre session">
+</div>
+<div class="mb-3">
+	<label for="descriptionSession" class="form-label">Description session</label>
+	<textarea class="form-control" th:field="*{description}" id="descriptionSession" rows="3"></textarea>
+</div>
+<div class="col-auto">
+	<button type="submit" class="btn btn-primary mb-3">Valider</button>
+</div>
+</form>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="windows-1256">
+
+<title>Add Candidate</title>
+</head>
+<body>
+<h1 align="center">Ajouter un nouveau Candidat</h1>
+
+<form method="post" th:action="@{/Candidate/add}"
+th:object="${candidat}">
+
+<table align="center">
+<tr>
+<td>ID</td>
+<td><input type="number" th:field="*{id}" /></td>
+</tr>
+<tr>
+<td>Name</td>
+<td><input type="text" th:field="*{name}" /></td>
+</tr>
+<tr>
+<td>Email</td>
+<td><input type="text" th:field="*{email}" /></td>
+</tr>
+<tr>
+<td>Adress</td>
+<td><input type="text" th:field="*{adress}" /></td>
+</tr>
+
+<tr>
+<td></td>
+<td><input type="submit" value="Ajouter" /></td>
+</tr>
+
+</table>
+
+</form>
+</body>
+</html>

@@ -13,11 +13,6 @@ public class Session {
 		this.description = description;
 	}
 
-	@Override
-	public String toString() {
-		return "Session [titre=" + titre + ", logo=" + logo + ", description=" + description + "]";
-	}
-
 	public String getTitre() {
 		return titre;
 	}
@@ -42,8 +37,14 @@ public class Session {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		return "Session [titre=" + titre + ", logo=" + logo + ", description=" + description + "]";
+	}
+
 	public Session() {
 		super();
 	}
+	
 
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="windows-1256">
+<title>Candidates</title>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+<link rel="stylesheet" th:href="@{/fontawesome/css/font-awesome.min.css}">
+</head>
+<body>
+
+<h2>Pour ajouter un nouveau candidat : </h2> <a th:href="@{/Candidate/add}"
+class="btn btn-primary">Cliquer ici</a>
+<h1 align="center">Liste des candidats</h1>
+
+<table align="center" border="1" class="table table-dark">
+<tr>
+<th>ID</th>
+<th>Nom</th>
+<th>Email</th>
+<th>Adress</th>
+<th>Actions</th>
+</tr>
+
+<tr th:each="candidate : ${list}">
+<td th:text="${candidate.id}"></td>
+<td th:text="${candidate.name}"></td>
+<td th:text="${candidate.email}"></td>
+<td th:text="${candidate.adress}"></td>
+<td><i class="fa fa-edit " ></i><a
+
+th:href="@{/Candidate/show/{id}(id=${candidate.id})}">Consulter</a></td>
+
+</tr>
+
+</table>
+</body>
+</html>
