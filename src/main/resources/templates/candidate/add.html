@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<div th:replace="fragments/header::header"></div>
 <meta charset="windows-1256">
 
 <title>Add Candidate</title>
@@ -37,5 +38,7 @@ th:object="${candidat}">
 </table>
 
 </form>
+
 </body>
+<div th:replace="fragments/footer::footer"></div>
 </html>

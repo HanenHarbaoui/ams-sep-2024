@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<div th:replace="fragments/header::header"></div>
 <meta charset="windows-1256">
 <title>Candidates</title>
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}"/>
@@ -34,5 +35,6 @@ th:href="@{/Candidate/show/{id}(id=${candidate.id})}">Consulter</a></td>
 </tr>
 
 </table>
+<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

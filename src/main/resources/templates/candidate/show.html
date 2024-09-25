@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<div th:replace="fragments/header::header"></div>
 <meta charset="windows-1256">
 <title>Détails Candidat</title>
 </head>
@@ -17,5 +18,6 @@ Email : <span th:text="${candidate.email}"></span>
 <h3>
 Adresse : <span th:text="${candidate.adress}"></span>
 </h3>
+<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>
