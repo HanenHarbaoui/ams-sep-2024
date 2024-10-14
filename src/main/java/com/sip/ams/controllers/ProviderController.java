@@ -14,6 +14,7 @@ import com.sip.ams.entities.Provider;
 import com.sip.ams.repositories.ProviderRepository;
 import com.sip.ams.services.ProviderService;
 
+import java.util.Comparator;
 import java.util.List;
 
 import jakarta.validation.Valid;
@@ -55,6 +56,8 @@ public class ProviderController {
 		List<Provider> res = service.listProvider();
 		if (res.size() == 0)
 			res = null;
+		
+res.sort(Comparator.comparing(Provider::getName));
 		model.addAttribute("providers", res);
 
 		return "provider/listProviders";

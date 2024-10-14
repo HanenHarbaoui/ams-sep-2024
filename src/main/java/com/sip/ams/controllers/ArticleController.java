@@ -2,6 +2,12 @@ package com.sip.ams.controllers;
 
 import jakarta.validation.Valid;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +23,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.ResponseBody;
 import com.sip.ams.entities.Article;
 import com.sip.ams.entities.Provider;
-import com.sip.ams.repositories.ArticleRepository;
-import com.sip.ams.repositories.ProviderRepository;
+
 import com.sip.ams.services.ArticleService;
 import com.sip.ams.services.ProviderService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/article/")
 public class ArticleController {
+
+	public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/uploadArticles";
 
 	private final ArticleService articleService;
 	private final ProviderService providerService;
@@ -55,10 +63,30 @@ public class ArticleController {
 	@PostMapping("add")
 	// @ResponseBody
 	public String addArticle(@Valid Article article, BindingResult result,
-			@RequestParam(name = "providerId", required = false) Long p) {
+			@RequestParam(name = "providerId", required = false) Long p, @RequestParam("files") MultipartFile[] files) {
 		Provider provider = providerService.findProviderById(p)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + p));
 		article.setProvider(provider);
+		// upload image
+
+		MultipartFile file = files[0];
+		
+		long time =new Date().getTime();
+		Path fileNameAndPath = Paths.get(uploadDirectory, " "+time+file.getOriginalFilename());
+
+		StringBuilder fileName = new StringBuilder();
+
+		fileName.append(""+time+file.getOriginalFilename());
+
+		try {
+			Files.write(fileNameAndPath, file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		article.setPicture(fileName.toString());
+
+		// fin upload
+
 		articleService.saveArticle(article);
 		return "redirect:list";
 		// return article.getLabel() + " " +article.getPrice() + " " +
@@ -89,18 +117,26 @@ public class ArticleController {
 	}
 
 	@PostMapping("edit")
-	public String updateArticle( @Valid Article article, BindingResult result,Model model, @RequestParam(name = "providerId", required = false) Long p) 
-	{
-	if (result.hasErrors()) 
-	{
-	
-	return "article/updateArticle";
+	public String updateArticle(@Valid Article article, BindingResult result, Model model,
+			@RequestParam(name = "providerId", required = false) Long p) {
+		if (result.hasErrors()) {
+
+			return "article/updateArticle";
+		}
+		Provider provider = providerService.findProviderById(p)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + p));
+		article.setProvider(provider);
+		articleService.saveArticle(article);
+
+		return "redirect:list";
 	}
-	Provider provider = providerService.findProviderById(p)
-	.orElseThrow(()-> new IllegalArgumentException("Invalid provider Id:" + p));
-	article.setProvider(provider);
-	articleService.saveArticle(article);
-	
-	return "redirect:list";
+
+	@GetMapping("show/{id}")
+	public String showArticleDetails(@PathVariable("id") long id, Model model)
+	{
+	Article article = articleService.findArticleById(id)
+	.orElseThrow(()->new IllegalArgumentException("Invalid providerId:" + id));
+	model.addAttribute("article", article);
+	return "article/showArticle";
 	}
 }
