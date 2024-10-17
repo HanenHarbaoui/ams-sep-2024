@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 public class Provider {
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 

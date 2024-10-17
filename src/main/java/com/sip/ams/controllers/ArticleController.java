@@ -54,7 +54,7 @@ public class ArticleController {
 	}
 
 	@GetMapping("add")
-	public String showAddArticleForm(Model model) {
+	public String showAddArticleForm(Article article ,Model model) {
 		model.addAttribute("providers", providerService.listProvider());
 		model.addAttribute("article", new Article());
 		return "article/addArticle";
@@ -63,7 +63,8 @@ public class ArticleController {
 	@PostMapping("add")
 	// @ResponseBody
 	public String addArticle(@Valid Article article, BindingResult result,
-			@RequestParam(name = "providerId", required = false) Long p, @RequestParam("files") MultipartFile[] files) {
+			@RequestParam(name = "providerId", required = false) Long p,
+			@RequestParam("files") MultipartFile[] files) {
 		Provider provider = providerService.findProviderById(p)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + p));
 		article.setProvider(provider);
@@ -117,9 +118,10 @@ public class ArticleController {
 	}
 
 	@PostMapping("edit")
-	public String updateArticle(@Valid Article article, BindingResult result, Model model,
+	public String updateArticle(@PathVariable("id") long id ,@Valid Article article, BindingResult result, Model model,
 			@RequestParam(name = "providerId", required = false) Long p) {
 		if (result.hasErrors()) {
+			article.setId(id);
 
 			return "article/updateArticle";
 		}
@@ -127,7 +129,7 @@ public class ArticleController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + p));
 		article.setProvider(provider);
 		articleService.saveArticle(article);
-
+		model.addAttribute("articles", articleService.findArticleById(id));
 		return "redirect:list";
 	}
 
